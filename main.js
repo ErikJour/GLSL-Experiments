@@ -58,9 +58,8 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 //===============================
 //Animate
 //===============================
-const clock = new THREE.Clock();
+const clock = new THREE.Timer();
 const animate = () => {
-    const elapsedTime = clock.getElapsedTime();
     controls.update();
     renderer.render(scene, camera);
     window.requestAnimationFrame(animate);
