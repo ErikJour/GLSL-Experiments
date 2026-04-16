@@ -1,0 +1,9 @@
+
+# Ignore IDE stuff
+.vscode/
+*.sln
+*.vcxproj*
+
+node_modules/
+
+.idea/
