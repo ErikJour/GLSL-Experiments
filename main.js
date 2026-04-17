@@ -19,13 +19,26 @@ const scene = new THREE.Scene();
 //Test Geo
 //===============================
 const geometry = new THREE.PlaneGeometry(1, 1, 32, 32);
+const count = geometry.attributes.position.count;
+const random = new Float32Array(count);
+for (let i = 0; i < count; i++)
+{
+    random[i] = Math.random();
+}
+
+geometry.setAttribute('aRandom', new THREE.BufferAttribute(random, 1))
 //===============================
 //Materials
 //===============================
 const material = new THREE.RawShaderMaterial({
     vertexShader: vertexShader,
-    fragmentShader: fragmentShader
+    fragmentShader: fragmentShader,
+    uniforms:
+        {
+            uFrequency: { value: new THREE.Vector2(10, 5) }
+        }
 });
+
 material.color = new THREE.Color(0xff0000);
 const mesh = new THREE.Mesh(geometry, material);
 
