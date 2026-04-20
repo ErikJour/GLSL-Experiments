@@ -18,7 +18,7 @@ const scene = new THREE.Scene();
 //===============================
 //Test Geo
 //===============================
-const geometry = new THREE.PlaneGeometry(1, 1, 32, 32);
+const geometry = new THREE.PlaneGeometry(10, 10, 32, 32);
 const count = geometry.attributes.position.count;
 const random = new Float32Array(count);
 for (let i = 0; i < count; i++)
@@ -35,7 +35,8 @@ const material = new THREE.RawShaderMaterial({
     fragmentShader: fragmentShader,
     uniforms:
         {
-            uFrequency: { value: new THREE.Vector2(10, 5) }
+            uFrequency: { value: new THREE.Vector2(10, 5) },
+            uResolution: { value: new THREE.Vector2(0.1, 0.1) }
         }
 });
 
