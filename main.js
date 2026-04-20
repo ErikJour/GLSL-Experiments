@@ -18,15 +18,8 @@ const scene = new THREE.Scene();
 //===============================
 //Test Geo
 //===============================
-const geometry = new THREE.PlaneGeometry(10, 10, 32, 32);
-const count = geometry.attributes.position.count;
-const random = new Float32Array(count);
-for (let i = 0; i < count; i++)
-{
-    random[i] = Math.random();
-}
+const geometry = new THREE.PlaneGeometry(1, 1, 32, 32);
 
-geometry.setAttribute('aRandom', new THREE.BufferAttribute(random, 1))
 //===============================
 //Materials
 //===============================
@@ -36,9 +29,13 @@ const material = new THREE.RawShaderMaterial({
     uniforms:
         {
             uFrequency: { value: new THREE.Vector2(10, 5) },
-            uResolution: { value: new THREE.Vector2(0.1, 0.1) }
+            uTime: { value: 0 },
+            uColor: { value: new THREE.Color('orange') }
         }
 });
+
+gui.add(material.uniforms.uFrequency.value, 'x').min(0).max(20).step(0.01).name('frequencyX');
+gui.add(material.uniforms.uFrequency.value, 'y').min(0).max(20).step(0.01).name('frequencyY');
 
 material.color = new THREE.Color(0xff0000);
 const mesh = new THREE.Mesh(geometry, material);
@@ -74,6 +71,12 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 //===============================
 const clock = new THREE.Timer();
 const animate = () => {
+    clock.update();
+    const elapsedTime = clock.getElapsed();
+   //Update Material
+    material.uniforms.uTime.value = elapsedTime;
+    material.uniforms.uColor.value = new THREE.Vector3(Math.sin(elapsedTime), Math.sin(elapsedTime) * 0.3, 1);
+
     controls.update();
     renderer.render(scene, camera);
     window.requestAnimationFrame(animate);
